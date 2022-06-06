@@ -9,6 +9,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Parameters;
+import org.testng.annotations.Test;
 
 import java.time.Duration;
 import java.util.Date;
@@ -16,35 +19,16 @@ import java.util.Scanner;
 
 public class Activity5 extends Activity3{
 
-    public static void main(String[] args) {
-        //open the website
-        driver_Init();
-
-        //login to website
-        login_OrangeHRM();
-
-        //verify homepage is displayed
-        verify_Homepage();
-
+    @Test
+    @Parameters({"firstName","lastName","gender","nationality","doB"})
+    public void editUserInfo(String firstName,String lastName,String gender, String nationality,String doB){
         //find the My Info menu item and click it
+        driver.findElement(By.xpath("//a[@id='menu_pim_viewMyDetails']/b[text()='My Info']")).click();
         driver.findElement(By.xpath("//a[@id='menu_pim_viewMyDetails']/b[text()='My Info']")).click();
         System.out.println("My Info page opened");
         //click on Edit button
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@value='Edit']")));
         driver.findElement(By.xpath("//input[@value='Edit']")).click();
-
-        //Get the first name, last name, gender, nationality and DOB using console (scanner class)
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter first name: ");
-        String firstName = sc.next();
-        System.out.println("Enter last name: ");
-        String lastName = sc.next();
-        System.out.println("Gender(M/F): ");
-        String gender = sc.next();
-        System.out.println("Nationality: ");
-        String nationality = sc.next();
-        System.out.println("DOB(YYYY-MM-DD): ");
-        String doB = sc.next();
 
         //Fill in the Name, Gender, Nationality, and the DOB fields
         driver.findElement(By.xpath("//input[@id='personal_txtEmpFirstName']")).clear();
@@ -70,7 +54,5 @@ public class Activity5 extends Activity3{
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//input[@value='Edit']")));
         System.out.println("Saved");
 
-        //close the browser
-        driver_Close();
     }
 }
