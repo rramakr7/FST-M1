@@ -74,12 +74,14 @@ public class GoogleChromeActivity {
         }
 
         //clear the list
-        //wait.until(ExpectedConditions.elementToBeClickable(AppiumBy.xpath("//android.widget.TextView[@text='Clear List']")));
-        //driver.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Clear List']")).click();
-        driver.findElement(AppiumBy.xpath("//android.view.View/android.widget.TextView[@text='Clear List']")).click();
+        driver.findElement(AppiumBy.xpath("//android.view.View/android.widget.TextView[@text=' Clear List']")).click();
 
         //assert that all the tasks are cleared from task list
-        Assert.assertFalse(driver.findElement(AppiumBy.xpath("//android.view.View[@resource-id='tasksList']")).isDisplayed(),"Element not found");
+        //get the number of tasks from the list and assert if it is 0.
+        tasks = tasklist.findElements(AppiumBy.className("android.widget.TextView"));
+        System.out.println("No of tasks: " + tasks.size());
+
+        Assert.assertEquals(tasks.size(),0);
 
     }
     @AfterClass
